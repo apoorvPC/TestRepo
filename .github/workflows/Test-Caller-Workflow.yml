@@ -2,4 +2,23 @@ name: Test Caller workflow
 
 on:
   workflow_dispatch:
+    inputs:
+      Test:
+        description: "Select Test type"
+        required: true
+        type: string
+
+jobs:
+  calling-workflow-2:
+    if: ${{ inputs.Test=="npm" }}
+    uses: apoorvPC/privatecircle_repo/.github/workflows/pan-repo-workdlow2.yml@main
+    secrets: 
+      token: ${{ secrets.NPM_AUTH_TOKEN }}
+      
+    
+  calling-workflow-1:
+    if: ${{ inputs.Test=="sonar" }}
+    uses: apoorvPC/privatecircle_repo/.github/workflows/pan-repo-workflow1.yml@main
+    secrets: 
+      token: ${{ secrets.SONAR_AUTH_TOKEN }}
     

@@ -10,12 +10,12 @@ on:
 
 jobs:
  calling-workflow-2:
-    if: ${{ inputs.Test }}=='npm' 
+    if: ${{ inputs.Test=='npm' }}
     uses: apoorvPC/privatecircle_repo/.github/workflows/pan-repo-workdlow2.yml@main
     
   
  calling-workflow-1:
-    if: ${{ inputs.Test }}=='sonar'
+    if: ${{ inputs.Test=='sonar' }}
     uses: apoorvPC/privatecircle_repo/.github/workflows/pan-repo-workflow1.yml@main
     
     

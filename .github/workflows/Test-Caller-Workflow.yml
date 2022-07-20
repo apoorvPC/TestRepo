@@ -7,16 +7,21 @@ on:
         description: "Select Test type"
         required: true
         type: string
+        
 
 jobs:
  calling-workflow-2:
     if: ${{ inputs.Test=='npm' }}
-    uses: apoorvPC/privatecircle_repo/.github/workflows/pan-repo-workdlow2.yml@main
+    uses: apoorvPC/privatecircle_repo/.github/workflows/pan-repo-workflow2.yml@main
+    secrets:
+      TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
     
   
  calling-workflow-1:
     if: ${{ inputs.Test=='sonar' }}
     uses: apoorvPC/privatecircle_repo/.github/workflows/pan-repo-workflow1.yml@main
+    secrets:
+      TOKEN: ${{ secrets.SONAR_AUTH_TOKEN }}
     
     
 

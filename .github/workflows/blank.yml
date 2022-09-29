@@ -25,7 +25,6 @@ jobs:
         run: echo "::set-output name=deployPath::./terraform"
       
       - name: Fetch Ansible inventory folder
-        working-directory: ./terraform
         run: |
           inventory_name='es-sp-test'
           echo "::set-output name=labelName::$inventory_name"

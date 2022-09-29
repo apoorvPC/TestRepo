@@ -1,0 +1,51 @@
+name: TI - Destroy or Delete
+
+on:
+  workflow_dispatch:
+    inputs:
+      cmd:
+        description: "Whether to destory or delete this stack. Must be destroyed before calling delete"
+        type: choice
+        options:
+          - DESTROY
+          - DELETE
+        required: true
+
+jobs:
+  destroy:
+    name: "DESTROY Stack"
+    if: ${{ github.event.inputs.cmd == 'DESTROY' }}
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set deployPath variable
+        id: vars
+        run: echo "::set-output name=deployPath::./terraform"
+      
+      - name: Fetch Ansible inventory folder
+        working-directory: ./terraform
+        run: |
+          inventory_name='es-sp-test'
+          echo "::set-output name=labelName::$inventory_name"
+
+
+    outputs: 
+      labelName: ${{ github.events.outputs.labelName }}
+
+  delete:
+    name: "DELETE Stack"
+    needs: destroy
+    if: ${{ github.event.inputs.cmd == 'DELETE' }}
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cleanup Ansible Inventor folder
+        run: |
+          echo "${{ needs.destroy.outputs.labelName }}"
+          
+
+
